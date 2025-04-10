@@ -1,0 +1,513 @@
+Netstat cmds
+
+1. netstat -a
+Displays all active connections and listening ports, including TCP and UDP connections.
+Example: netstat -a
+This command shows both incoming and outgoing connections and listening ports.
+
+2. netstat -l
+Shows only the ports that are currently in the listening state.
+Example: netstat -l
+This command filters out active connections and only lists the ports that are open and waiting for incoming connections.
+
+3. netstat -n
+Displays addresses and port numbers in numerical form instead of resolving hostnames.
+Example: netstat -n
+Useful when you want a quicker output without DNS resolution delays.
+
+4. netstat -t
+Displays only TCP connections.
+Example: netstat -t
+This command filters the output to show only TCP protocol-based connections.
+
+5. netstat -u
+Displays only UDP connections.
+Example: netstat -u
+Shows a list of UDP ports that are currently in use or listening.
+
+6. netstat -p
+Displays the process ID (PID) and the name of the program that is using each socket.
+Example: netstat -p
+Useful for identifying which process is associated with a specific network connection.
+
+7. netstat -o
+Displays the owning process ID for each connection.
+Example: netstat -o
+This command is helpful for tracking processes with their corresponding network connections.
+
+8. netstat -s
+Displays network statistics by protocol.
+Example: netstat -s
+This command provides detailed statistics for protocols like TCP, UDP, and ICMP.
+
+9. netstat -i
+Displays a list of network interfaces and their statistics.
+Example: netstat -i
+This command helps you monitor network interface statistics, including received and transmitted packets.
+
+10. netstat -r
+Displays the routing table for the system.
+Example: netstat -r
+This command shows the current routing table, including routes to different destinations.
+
+11. netstat -c
+Continuously displays updated network statistics.
+Example: netstat -c
+Use this command to monitor real-time network traffic and changes in network statistics.
+
+12. netstat -g
+Displays multicast group memberships for all interfaces.
+Example: netstat -g
+This command is useful for debugging multicast communication and viewing group memberships.
+
+13. netstat -at
+Displays all active TCP connections.
+Example: netstat -at
+Filters the list to show only TCP connections.
+
+14. netstat -ant
+Displays all active TCP connections in numerical form.
+Example: netstat -ant
+This command shows active TCP connections with numerical addresses and port numbers.
+
+15. netstat -al
+Displays all active connections and listening ports.
+Example: netstat -al
+This command is similar to -a but includes only listening sockets.
+
+16. netstat -aep
+Displays all active connections with process IDs and names.
+Example: netstat -aep
+This command gives detailed connection information along with associated processes.
+
+17. netstat -s > file2.txt
+Saves the network statistics to a file named file2.txt.
+Example: netstat -s > file2.txt
+Redirects the output of netstat -s into a text file for later analysis.
+
+18. netstat -ct
+Displays current TCP connections with connection state.
+Example: netstat -ct
+Provides a list of active TCP connections and their states, such as established or listening.
+
+19. netstat -atnp | grep ESTA
+Displays TCP connections with their process IDs and filters the output for the "ESTABLISHED" state.
+Example: netstat -atnp | grep ESTA
+Useful for checking which processes have established TCP connections.
+
+20. netstat -lntu
+Displays all listening TCP and UDP ports.
+Example: netstat -lntu
+This command shows all listening ports for both TCP and UDP protocols, ignoring active connections.
+
+Github Repositories:
+https://github.com/MicrosoftDocs/windowsserverdocs/blob/main/WindowsServerDocs/administration/windows-commands/netstat.md
+
+
+1. What is the purpose of the netstat command in Linux?
+The netstat (network statistics) command is used to display various network-related information such as:
+
+    Active network connections (both incoming and outgoing)
+
+    Listening ports
+
+    Routing tables
+
+    Interface statistics
+
+    Masquerade connections
+
+    Multicast memberships
+
+It helps diagnose network issues and monitor network traffic.
+
+2. How do you display all active network connections using netstat?
+netstat -an
+
+    -a: Show all connections and listening ports
+
+    -n: Show addresses and port numbers in numeric form (instead of resolving hostnames)
+
+3. Which netstat option shows the process IDs (PIDs) associated with network connections?
+netstat -p
+
+    -p: Show the PID and name of the program to which each socket belongs
+    (You may need to run it as root to see all processes: sudo netstat -p)
+
+4. How can you display open TCP ports using netstat?
+netstat -tuln
+
+    -t: TCP connections
+
+    -u: UDP connections
+
+    -l: Only show listening ports
+
+    -n: Numeric output (IP addresses and port numbers)
+
+To filter for only TCP:
+
+netstat -tnl
+
+5. What is the difference between LISTENING and ESTABLISHED states in netstat output?
+
+    LISTENING:
+    Indicates that a server is waiting for incoming connection requests on a specific port.
+    (e.g., a web server is listening on port 80 for HTTP requests.)
+
+    ESTABLISHED:
+    Indicates that a successful connection has been made between two hosts, and data can be transferred.
+
+6. How do you display the routing table using netstat?
+netstat -r
+
+    This shows the kernel routing table, including destination networks, gateways, and interface details.
+
+7. What is the difference between TCP and UDP in netstat output?
+
+    TCP (Transmission Control Protocol):
+
+        Connection-oriented
+
+        Reliable (guarantees delivery and order)
+
+        Appears in netstat output under the Proto column as tcp, tcp6 (for IPv6)
+
+        Shows states like LISTEN, ESTABLISHED, etc.
+
+    UDP (User Datagram Protocol):
+
+        Connectionless
+
+        Faster but unreliable (no guarantee of delivery)
+
+        Appears as udp, udp6 in the Proto column
+
+        No connection state is shown because UDP doesn’t establish sessions
+
+8. How do you display numerical IP addresses instead of hostnames in netstat?
+netstat -n
+
+    The -n option disables hostname resolution, so only IP addresses and port numbers are displayed.
+
+9. What do the Recv-Q and Send-Q columns in netstat output represent?
+
+    Recv-Q (Receive Queue):
+
+        Number of bytes received by the kernel but not yet read by the application.
+
+        A non-zero value may indicate that the application is not reading the data fast enough.
+
+    Send-Q (Send Queue):
+
+        Number of bytes queued to be sent to the remote host but not acknowledged yet.
+
+        A non-zero value may suggest network congestion or application slowness in sending data.
+
+10. How can you continuously monitor network connections using netstat?
+
+While netstat itself does not have a built-in live refresh mode, you can use it with tools like watch:
+watch -n 2 netstat -ant
+
+    watch: Re-runs the command every few seconds
+
+    -n 2: Refresh every 2 seconds
+
+    -a: All connections
+
+    -n: Numeric addresses
+
+    -t: TCP connections
+
+11. How do you filter netstat output to show only established connections?
+
+netstat -ant | grep ESTABLISHED
+
+    -a: All sockets
+
+    -n: Numeric IP/port display
+
+    -t: TCP connections only
+
+    grep ESTABLISHED: Filters out only the connections in the ESTABLISHED state
+
+12. How can you check which process is using port 80 with netstat?
+
+sudo netstat -tulpn | grep :80
+
+    -t: TCP
+
+    -u: UDP
+
+    -l: Listening sockets
+
+    -p: Show the PID and process name
+
+    -n: Numeric output
+
+    grep :80: Filters for port 80
+
+    You’ll need sudo to see processes you don’t own.
+
+13. What does the -ano option in netstat do?
+
+This syntax (-ano) is Windows-specific, not Linux.
+
+In Windows, netstat -ano does:
+
+    -a: Show all connections and listening ports
+
+    -n: Numeric addresses and port numbers
+
+    -o: Show owning process ID (PID)
+
+    On Linux, use netstat -anp instead for similar info.
+
+14. What is the difference between -an and -tuln options in netstat?
+Option	Meaning
+-an	Shows all connections (including ESTABLISHED, LISTENING, etc.) with numeric IPs and ports
+-tuln	Filters for listening TCP/UDP ports only, numeric IPs and ports
+Difference	-an gives a broader view of all connections, while -tuln is more focused on services that are waiting for incoming connections
+
+15. How can netstat be used to detect suspicious connections on a system?
+You can use netstat to identify unauthorized or malicious connections by checking:
+
+Unusual IPs: netstat -ant
+Look for foreign IPs or unknown remote addresses.
+
+Unknown Services/Ports: sudo netstat -tulpn
+See if unexpected services are listening (e.g., a server on a random high port).
+
+Multiple ESTABLISHED Connections: netstat -an | grep ESTABLISHED
+
+High volume of connections may indicate malware, reverse shells, or botnets.
+
+Processes Using Suspicious Ports: sudo netstat -tulpn | grep -E ':[0-9]+'
+
+16. Why is it important to monitor listening ports with netstat?
+
+Monitoring listening ports with netstat is important because:
+
+    Security: Listening ports show which services are waiting for incoming connections. Unwanted or unexpected services could indicate a security vulnerability or unauthorized access.
+
+    System Management: Helps in tracking which applications are listening on which ports to ensure there are no conflicts or performance issues.
+
+    Network Troubleshooting: Identifying which services are open helps diagnose network-related problems or prevent potential threats like malware or unauthorized connections.
+
+17. How can netstat help in detecting a DDoS attack?
+
+netstat can help detect a Distributed Denial of Service (DDoS) attack by:
+
+    Identifying a large number of incoming connections to a particular port or service:
+
+netstat -an | grep ESTABLISHED
+
+High volume of connections from the same or suspicious IP addresses or foreign addresses:
+
+    netstat -an | grep SYN_REC
+
+    (The SYN_REC state may indicate incomplete connection attempts, typical of a DDoS attack.)
+
+    Monitoring changes in network traffic: A sudden spike in connections to a specific service or port could indicate a DDoS attack.
+
+    You can pair this with rate-limiting techniques or other security tools for proactive DDoS defense.
+
+18. What would you do if you find an unknown foreign address in your netstat output?
+
+If you find an unknown foreign address in your netstat output:
+
+    Investigate: Check which process is associated with the foreign address:
+
+sudo netstat -anp
+
+Look up the IP: Use whois or an IP lookup service to determine the origin of the IP address. If it is from an unexpected region, it could be suspicious.
+
+whois <IP address>
+
+Block the IP: If the foreign address is determined to be suspicious or malicious, block the IP through a firewall (e.g., using iptables):
+
+    sudo iptables -A INPUT -s <IP address> -j DROP
+
+    Monitor for repeated connections: Keep an eye on further suspicious activity by monitoring the port and connection logs.
+
+19. How can netstat be used to detect open ports that shouldn't be accessible?
+
+To detect open ports that shouldn't be accessible:
+
+    Check for open ports:
+
+    netstat -tulpn
+
+    This will list the services listening on each open port.
+
+    Verify Port Usage: Compare the list of open ports against expected services for the system. If ports are open that are not required for the operation of the system (e.g., port 23 for Telnet), those ports should be closed or restricted.
+
+    Cross-check with firewall settings: Ensure firewall rules match expected configurations. For example, close unnecessary ports using iptables or firewall management tools.
+
+20. How can you use netstat to identify malware activity on a system?
+
+netstat can help identify potential malware activity by looking for unusual connections, listening ports, or processes:
+
+    Unusual connections: Check for foreign addresses that should not be connected to your system:
+
+netstat -an | grep ESTABLISHED
+
+Suspicious listening ports: Malware often uses unusual ports to hide its activity. For example, if you see an unknown service listening on a high-numbered port:
+
+netstat -tulpn
+
+Unexpected processes: Use the -p option to view the PID and program name. Suspicious or unfamiliar processes could indicate malware:
+
+sudo netstat -tulpn
+
+Excessive outgoing traffic: Malware may establish outbound connections to command-and-control (C&C) servers. Use netstat to check for unusual outgoing connections.
+
+Dynamically monitor changes: Malware may attempt to open ports or maintain connections continuously. Monitoring with watch can help identify any dynamic changes:
+
+watch -n 2 'netstat -tulpn'
+
+21. How do you use netstat to find the process using a specific port?
+
+To find the process using a specific port (e.g., port 80):
+
+sudo netstat -tulpn | grep :80
+
+    -t: TCP connections only
+
+    -u: UDP connections only
+
+    -l: Listening sockets
+
+    -p: Show the process ID (PID) and program name
+
+    -n: Show numerical IP addresses and port numbers
+
+    grep :80: Filter by port 80
+
+22. How do you list all Unix domain sockets using netstat?
+
+To list all Unix domain sockets:
+
+netstat -a | grep unix
+
+    -a: Show all connections
+
+    grep unix: Filters only the Unix domain sockets (which typically show as unix in the Proto column)
+
+23. What is the difference between netstat -r and route commands?
+
+    netstat -r: Displays the routing table of the system, showing routes used for sending packets, with destination networks and gateways.
+
+    route: This is another command used to view or manipulate the routing table, but it is considered more specific and older compared to netstat. It also allows setting routes.
+
+Both commands give similar output, but route is more focused on editing the routes, whereas netstat -r is better for viewing network statistics.
+24. How can you check the network statistics using netstat?
+
+To check network statistics with netstat:
+
+netstat -s
+
+    The -s option shows detailed statistics for various network protocols (TCP, UDP, ICMP, etc.), such as packets sent, errors, and dropped packets.
+
+25. How can you use netstat to monitor traffic between your system and a specific IP address?
+
+To monitor traffic between your system and a specific IP address:
+
+netstat -an | grep <IP_address>
+
+    Replace <IP_address> with the IP you want to monitor.
+
+    This filters all active connections involving that specific IP address.
+
+You can also combine with watch to monitor in real-time:
+
+watch -n 2 'netstat -an | grep <IP_address>'
+
+26. What are some alternatives to netstat in modern Linux distributions?
+
+Some modern alternatives to netstat include:
+
+    ss: A faster and more powerful utility to examine network sockets. Use it for most netstat functionalities:
+
+    ss -tuln
+
+    ifstat: Displays network interface statistics.
+
+    ip: A versatile tool for managing network interfaces and routing tables.
+
+    nmap: A network scanner that can discover hosts and services on a network.
+
+27. Why is netstat deprecated in some Linux distributions?
+
+netstat is deprecated because it is considered slower and less efficient compared to newer tools like ss (Socket Statictics). ss is more capable of handling the increased number of network connections in modern systems, and it offers more detailed and structured outputs, especially for IPv6.
+28. How does netstat handle IPv6 addresses?
+
+netstat can display both IPv4 and IPv6 addresses. To view IPv6 connections, you can use the following:
+
+netstat -tuln6
+
+    -6: Displays only IPv6 addresses.
+
+IPv6 addresses will be shown in their standard format (e.g., fe80::a00:27ff:fe9b:fb6e).
+29. How can you capture the output of netstat for later analysis?
+
+To capture netstat output for later analysis, you can redirect the output to a file:
+
+netstat -tulpn > netstat_output.txt
+
+    > redirects the output to a file named netstat_output.txt.
+
+    You can also append to a file with >> if you want to capture multiple outputs over time.
+
+30. How do you interpret netstat output to identify a potential man-in-the-middle attack?
+
+To detect a man-in-the-middle (MITM) attack using netstat:
+
+    Look for unusual or foreign IP addresses connected to your system, especially on ports commonly used for secure communication (e.g., HTTP, HTTPS).
+
+    Check for unexpected established connections that could represent attackers intercepting or redirecting traffic.
+
+    Look for duplicate connections or connections where there shouldn’t be any, particularly when combined with the use of public key infrastructure (PKI) certificates in secure connections.
+
+31. What is the difference between the netstat command and the ss command?
+
+    netstat:
+
+        Older, less efficient, and slower tool.
+
+        Shows information about network connections, routing tables, and network interfaces.
+
+    ss:
+
+        Newer, faster, and more capable alternative to netstat.
+
+        Shows more detailed information, especially useful for analyzing sockets and connection states.
+
+        Better for working with IPv6 and high numbers of connections.
+
+32. How do you combine netstat with grep to filter specific results?
+
+You can use grep to filter the netstat output based on specific criteria. For example:
+
+    Filter by port:
+
+netstat -an | grep ':80'
+
+Filter by state:
+
+netstat -an | grep 'ESTABLISHED'
+
+Filter by a specific IP:
+
+    netstat -an | grep '192.168.1.1'
+
+33. How can netstat be used for network performance tuning?
+
+You can use netstat to monitor network activity and identify performance bottlenecks:
+
+    Monitor for network congestion: Use netstat -s to track packet drops, retransmits, and errors.
+
+    Check established connections: Identify excessive connections or abnormal states, indicating possible service issues or congestion.
+
+
+    Track open ports: Use netstat -tulpn to identify which services are consuming network resources and ensure that only necessary ports are open.
