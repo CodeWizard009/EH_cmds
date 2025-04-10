@@ -1,0 +1,217 @@
+Nmap 
+
+1. nmap [target]
+Example: nmap 192.168.1.1
+Performs a basic scan on the target to check the status of commonly used ports. This is the default Nmap scan.
+
+2. nmap -p [ports] [target]
+Example: nmap -p 22,80,443 192.168.1.1
+Scans only the specified ports on the target instead of the default 1000 ports.
+
+3. nmap -p- [target]
+Example: nmap -p- 192.168.1.1
+Scans all 65535 ports on the target. Useful for thorough port discovery.
+
+4. nmap -sn [target]
+Example: nmap -sn 192.168.1.0/24
+Performs a ping scan to discover live hosts without port scanning.
+
+5. nmap -sV [target]
+Example: nmap -sV 192.168.1.1
+Detects service versions running on open ports.
+
+6. nmap -O [target]
+Example: nmap -O 192.168.1.1
+Attempts to determine the Operating System of the target machine.
+
+7. nmap -A [target]
+Example: nmap -A 192.168.1.1
+Enables aggressive scan: OS detection, version detection, script scanning, and traceroute.
+
+8. nmap -sU [target]
+Example: nmap -sU 192.168.1.1
+Performs a UDP scan. UDP scanning is slower and used to identify open UDP ports.
+
+9. nmap -sS [target] 
+Example: nmap -sS 192.168.1.1
+Performs a stealth TCP SYN scan. It’s fast and often undetected by firewalls.
+
+10. nmap -sA [target]
+Example: nmap -sA 192.168.1.1
+ACK scan. Used to map firewall rulesets and detect filtered/unfiltered ports.
+
+11. nmap -sW [target]
+Example: nmap -sW 192.168.1.1
+TCP Window scan. It uses TCP window size to identify open ports.
+
+12. nmap -sM [target] 
+Example: nmap -sM 192.168.1.1
+Maimon scan. Used to bypass firewalls and detect unusual behavior in packet filtering.
+
+13. nmap --script [script] [target]
+Example: nmap --script=http-title 192.168.1.1
+Uses a specific NSE script for custom scanning (e.g., HTTP info, SSH checks).
+
+14. nmap --script=vuln [target]
+Example: nmap --script=vuln 192.168.1.1
+Runs vulnerability detection scripts to identify known security issues.
+
+  15. nmap [targets]
+Example: nmap 192.168.1.1 192.168.1.2
+Scans multiple targets in a single command.
+
+16. nmap [range]
+Example: nmap 192.168.1.1-20
+Scans a range of IPs from .1 to .20.
+
+17. nmap [subnet/CIDR]
+Example: nmap 192.168.1.0/24
+Scans an entire subnet using CIDR notation.
+
+18. nmap -iL [file.txt]
+Example: nmap -iL targets.txt
+Scans targets listed in a file. Each line should contain a host or subnet.
+
+19. nmap -iR 100
+Example: nmap -iR 100
+Scans 100 random hosts on the internet.
+
+20. nmap --exclude [IPs]
+Example: nmap 192.168.1.0/24 --exclude 192.168.1.5,192.168.1.10
+Excludes specific IPs from the scan.
+
+21. nmap -oN [file] [target]
+Example: nmap -oN scan.txt 192.168.1.1
+Saves the output in normal text format to a file.
+
+22. nmap -oX [file] [target]
+Example: nmap -oX scan.xml 192.168.1.1
+Saves the output in XML format for easy parsing.
+
+23. nmap -Pn [target]
+Example: nmap -Pn 192.168.1.1
+Skips host discovery (assumes host is up) and scans directly.
+
+24. nmap --traceroute [target]
+Example: nmap --traceroute 192.168.1.1
+Performs a traceroute to discover the network path to the host.
+
+25. nmap -T[1-5] [target]
+Example: nmap -T4 192.168.1.1
+Sets the scan speed from paranoid (1) to insane (5). T4 is commonly used for faster scanning.
+
+26. nmap --top-ports [N] [target]
+Example: nmap --top-ports 100 192.168.1.1
+Scans the top N most commonly used ports.
+
+27. nmap --disable-dns [target]
+Example: nmap --disable-dns 192.168.1.1
+Disables DNS resolution. Useful for speeding up scans.
+
+28. nmap -p [start]-[end] [target]
+Example: nmap -p 20-100 192.168.1.1
+Scans a range of ports from 20 to 100.
+
+29. nmap -sL [target]
+Example: nmap -sL 192.168.1.0/24
+List scan: Doesn’t scan the targets but lists all IPs in the range.
+
+30. nmap -sn -n [target]
+Example: nmap -sn -n 192.168.1.0/24
+Disables port scanning. Only checks which hosts are up (ping sweep).
+
+31. nmap -Pn -p 80 [target]
+Example: nmap -Pn -p 80 192.168.1.1
+Disables host discovery, directly scans port 80 using TCP SYN.
+
+32. TCP Port Scan
+Command: nmap -sT [target]
+Example: nmap -sT 192.168.1.1
+Description:
+This is the TCP Connect scan. It completes the full TCP 3-way handshake (SYN, SYN-ACK, ACK) and is easily detectable in logs. It's used when you don’t have raw packet privileges (like running Nmap without root/administrator access).
+
+33. UDP Port Scan
+Command: nmap -sU [target]
+Example: nmap -sU 192.168.1.1
+Description:
+Scans for open UDP ports. Since UDP doesn’t have handshakes like TCP, it’s harder to detect open ports. Responses or ICMP errors help determine if a port is open or filtered. It’s slower but useful for finding services like DNS, SNMP, and TFTP.
+
+34. TCP SYN Discovery on Port x (default 80)
+Command: nmap -PS[x] [target]
+Example: nmap -PS80 192.168.1.1
+Description:
+Sends a SYN packet to the specified port (default is port 80) during host discovery. If a response is received, the host is considered "up." You can specify multiple ports like -PS22,80,443 to improve accuracy.
+
+
+a. Find the website IP address and scan it using Nmap
+Command to find IP: nslookup example.com
+Example: nslookup scanme.nmap.org
+Then scan using IP: nmap 45.33.32.156
+
+b. Do the version scan on website scanme.nmap.org
+Command: nmap -sV scanme.nmap.org
+Description: Performs version detection of services running on open ports.
+
+c. Export the output of Nmap command in a text file
+Command: nmap scanme.nmap.org -oN output.txt
+Description: Saves the normal Nmap output into a text file named output.txt.
+
+d. Export the output of Nmap command in an XML file
+Command: nmap scanme.nmap.org -oX output.xml
+Description: Saves the output in XML format, useful for parsing with tools.
+
+e. I would like to see the MAC address of the host. Which option to use?
+Command: nmap -sn 192.168.1.1
+Description: MAC address is shown during host discovery if you're scanning local network and using root/administrator privileges.
+
+f. What is the use of –sP option in Nmap?
+Note: -sP is now replaced by -sn.
+Use: It performs a ping scan to check which hosts are up, without doing a port scan.
+
+g. What is the use of nslookup command?
+Use: It is used to find the IP address of a domain or the domain name from an IP.
+Example: nslookup iccs.ac.in
+
+h. Find IP of iccs.ac.in and scan it with Nmap
+Find IP: nslookup iccs.ac.in
+Example Output: IP = 103.199.14.68
+Scan using IP: nmap 103.199.14.68
+
+i. Run Nmap on domain and IP – observe differences
+Commands: nmap scanme.nmap.org
+nmap 45.33.32.156
+Observation:
+Usually no difference if domain points directly to that IP. However, some websites use load balancing, so scanning IP directly may not reflect the domain-level protections or hostnames.
+
+j. What is the use of -sA option?
+Command: nmap -sA [target]
+Use: ACK scan – used to determine firewall rules and if ports are filtered or unfiltered. Does not show open/closed.
+
+k. How to scan only a specific port?
+Command: nmap -p 80 scanme.nmap.org
+Scans only port 80.
+
+l. Can I scan two port numbers at a time? How?
+Yes!
+nmap -p 22,443 scanme.nmap.org
+Scans both ports 22 and 443.
+
+m. What is the use of -sL option?
+Command: nmap -sL 192.168.1.0/24
+
+Use: Performs a list scan – lists all targets that would be scanned, but does not send any packets.
+
+n. How to list down only the targets without scanning them?
+Command: nmap -sL [target]
+Example: nmap -sL google.com
+Use:Only lists the resolved IPs or hosts, no scanning.
+
+o. What is the use of -sn option?
+Command: nmap -sn 192.168.1.0/24
+Use: Ping scan (host discovery only). Checks which hosts are online, but doesn’t scan any ports.
+
+Some Good nmap Repos!
+https://github.com/jasonniebauer/Nmap-Cheatsheet
+https://github.com/ekol-x9/nmap-cheatsheet
+Find others on google
+
