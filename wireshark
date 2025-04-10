@@ -1,0 +1,96 @@
+Wireshark 
+
+Step 1: Select a Network Interface
+    1. Choose the network interface you want to monitor (e.g., eth0 or wlan0).
+    2. Click on the interface to start capturing packets.
+Explanation:
+    • eth0: Wired Ethernet interface
+    • wlan0: Wireless interface
+Expected Output: Wireshark will start capturing live network packets and display them in real-time.
+
+Step 2: Filter Captured Packets
+    1. Use Wireshark's filter bar to narrow down the captured packets. For example:
+        ◦ To filter HTTP traffic: http
+        ◦ To filter TCP traffic: tcp
+        ◦ To filter ICMP traffic (ping requests): icmp
+Expected Output: The packet list will update to display only the packets that match the filter criteria.
+
+Step 4: Analyze Packet Details
+    1. Click on a packet to view its details.
+    2. The Packet Details Pane will display the packet's protocol, source, destination, and other information.
+    3. Expand the protocol layers to see more details.
+Explanation: Understanding packet details helps in identifying potential security issues, such as unauthorized access or data leaks.
+
+Step 5: Capture and Analyze HTTP Traffic
+    1. Open your browser and visit a website (e.g., http://example.com).
+    2. In Wireshark, filter the captured packets using: http
+    3. Click on an HTTP packet to view its details.
+Expected Output: You will see the GET and POST requests made by your browser, including the requested URLs and parameters.
+
+Step 6: Capture and Analyze DNS Traffic
+    1. In Wireshark, filter the captured packets using: dns
+    2. Click on a DNS query packet to view its details.
+Expected Output: You will see the DNS queries made by your system, including the domain names and corresponding IP addresses.
+
+Step 7: Capture and Analyze ICMP Traffic
+    1. Open your terminal and run a ping command: ping -c 4 <target_ip>
+    2. In Wireshark, filter the captured packets using: icmp
+    3. Click on an ICMP packet to view its details.
+Expected Output: You will see the ICMP echo requests and replies between your system and the target.
+
+Step 8: Stop and Save the Capture
+    1. To stop the packet capture, click the Stop button in Wireshark.
+    2. Save the captured packets to a file for later analysis: File > Save As
+Expected Output: The packet capture will be saved as a .pcap file.
+
+Website names which have filter list:
+https://www.stationx.net/wireshark-cheat-sheet/
+https://medium.com/hacker-toolbelt/wireshark-filters-list-983c49468a45
+https://www.wireshark.org/docs/man-pages/wireshark-filter.html
+https://github.com/coreb1t/awesome-pentest-cheat-sheets/blob/master/docs/Wireshark_Display_Filters.pdf (Most IMP)
+
+Wireshark Filterlist:
+
+Basic Filters:
+
+Protocol: http, tcp, ip, dns, ftp, ssh, icmp, arp 
+IP Address: ip.addr == 192.168.1.1 (or ip.src == 192.168.1.1 for source, ip.dst for destination) 
+Port: tcp.port == 80 (or udp.port == 53) 
+MAC Address: eth.addr == 00:11:22:33:44:55 
+TCP Flags: tcp.flags.syn == 1, tcp.flags.ack == 1, tcp.flags.rst == 1 
+Frame Length: frame.len > 1000
+Time Range: time > 10 (seconds) 
+
+Logical Operators:
+
+    AND: && or and
+    OR: || or or
+    NOT: ! or not 
+
+Examples:
+
+To display only HTTP traffic: http 
+To display only TCP packets to port 80: tcp.port == 80 
+To display only IP traffic from 192.168.1.1: ip.src == 192.168.1.1 
+To display HTTP requests containing "/test": http.request.uri contains "/test" 
+To filter for packets with a specific TCP stream: tcp.stream == 123 
+To filter for HTTP responses: http.response 
+To filter for DNS requests: dns.qryname contains "example.com" 
+To filter for packets with a specific TCP flag: tcp.flags.syn == 1 
+To filter for packets with a specific MAC address: eth.addr == 00:11:22:33:44:55 
+To filter for multicast packets: (eth.dst[0] & 1) 
+To filter for packets with a specific hostname: ip.host == hostname 
+
+Advanced Filters and Functions:
+
+    upper() and lower(): For case-insensitive string comparisons
+    len(): To get the length of a field
+    string(): To convert a non-string field to a string
+    vals(): To convert a field value to its value string
+    dec() and hex(): To convert unsigned integers to decimal or hexadecimal strings
+    ip_special_name(): To get the IP special-purpose block name
+    ip_special_mask(): To get the IP special-purpose block flags
+    ip_linklocal(): To check if an IP address is link-local
+    ip_multicast(): To check if an IP address is multicast
+    ip_rfc1918(): To check if an IPv4 address is private-use
+    ip_ula(): To check if an IPv6 address is unique-local 
