@@ -40,3 +40,15 @@ Expected Output: Hashcat will resume from where it left off.
 Step 7: Save the Cracked Passwords to a File
     1. To save the cracked passwords to a file: hashcat -m 0 -a 0 hash.txt /usr/share/wordlists/rockyou.txt --outfile cracked_passwords.txt
     2. View the saved file: cat cracked_passwords.txt
+
+Hashcat Tutorial:
+1. hashcat -h
+2. To see all suppoerted hashtypes: hashcat --examples-hashes
+3. To see specfic supported hash: hashcat --examples-hashes | grep -i "sha256"
+4. Common modes in hashat are: -m value
+-> MD5(0),SHA1(100),SHA256(1400),SHA512(1700),NTLM(Windows)(1000),bcrypt(3200),MTSQL(300),WPA2 (Wifi)(22000)
+5. In /usr/share directory: cd wordlist 
+touch md5.txt
+echo <"hash"> > md5.txt
+ls (spot rockyou.txt.gz) if required decompress: gunzip -k rockyou.txt.gz
+hashcat -m 0 -a 0 md5.txt rockyou.txt.gz or hashcat -m 0 -a 0 hash.txt /usr/share/wordlists/rockyou.txt --force
