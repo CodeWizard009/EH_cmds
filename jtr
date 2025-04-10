@@ -1,0 +1,35 @@
+John the ripper
+
+1. Add user indira: sudo useradd -m -s /bin/bash indira
+sudo cat/etc/passwd: we can see user been added
+
+2. To check whether the user has password: sudo cat/etc/shadow (! means no password is there)
+To set password: sudo passwd indira
+Recheck if it is set: sudo cat/etc/shadow (! should not be there)
+
+3. We can add user using: sudo adduser <username> (Here it will ask to set password also)
+
+4. Check usergroups: id <username>
+
+5. To give sudo privilege: sudo usermod -aG sudo <username> (check usergroups again)
+
+6. Find all users there in your system: cut -d: -f1 /etc/passwd
+sudo cat /etc/passwd
+
+7. Count of users present in kali linux: sudo cat /etc/passwd | wc -l
+
+8. Print all usernames with user ids: cat /etc/passwd | awk -F: '{print $1,$3}' 
+cut -d: -f1,3 /etc/passwd
+
+9. Display all the regular users (userid>=1000): awk -F ':' '{if ($3>=100) print $1,$3}' /etc/passwd
+
+10. Crack password using jon the ripper :
+a.sudo unshadow /etc/passwd/etc/shadow > password.out
+b.john --format=crypt ./password.out
+c.john --show ./password.out
+
+11. Cmd to display al the supported hash formats: john --list=formats
+
+12. Generate a hash using following website: www.browserling.com/tools/all-hashes
+Generate a hash of any name and do copy most of the supported hashes in one file and give that file a name (file.txt)
+Run this cmd: john --incremental file.txt
