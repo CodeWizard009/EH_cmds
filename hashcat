@@ -1,0 +1,42 @@
+hashcat steps:
+Step 1: Verify Hashcat Installation
+    1. Open your terminal in Kali Linux.
+    2. Check if Hashcat is installed by running: hashcat --version
+    3. If Hashcat is not installed, install it using: sudo apt update && sudo apt install hashcat
+
+Step 2: Create a Sample Hash File
+    1. Create a text file containing a hash to crack. For example: echo -n "password" | md5sum > hash.txt or echo -n "password" | md5sum | awk'{print$1}' > hash1.txt 
+    2. Open the file to verify the hash: cat hash.txt
+Example Output: 5f4dcc3b5aa765d61d8327deb882cf99  - This is the MD5 hash of the word "password".
+  
+Step 3: Perform a Dictionary Attack
+    1. Use Hashcat to crack the hash using a wordlist: hashcat -m 0 -a 0 hash.txt /usr/share/wordlists/rockyou.txt
+Explanation:
+    • -m 0: Specifies the hash type (MD5 in this case).
+    • -a 0: Specifies the attack mode (dictionary attack).
+    • hash.txt: The file containing the hash.
+    • /usr/share/wordlists/rockyou.txt: The wordlist to use for cracking.
+Expected Output: Hashcat will display the cracked password:
+5f4dcc3b5aa765d61d8327deb882cf99:password
+
+Step 4: Perform a Brute-Force Attack
+    1. Use Hashcat to perform a brute-force attack: hashcat -m 0 -a 3 hash.txt ?a?a?a?a?a?a
+Explanation:
+    • -m 0: Hash type (MD5).
+    • -a 3: Brute-force attack mode.
+    • ?a?a?a?a?a?a: Tries all possible characters for a six-character password.
+Expected Output: Hashcat will try all combinations and display the cracked password.
+  
+Step 5: Cracking NTLM Hashes
+    1. Create a file with an NTLM hash (used in Windows systems): echo -n "password" | iconv -f utf-8 -t utf-16le | openssl dgst -md4 > ntlm.txt or awk {print $NF} ntlm.txt > ntlm1.txt
+    2. Use Hashcat to crack the NTLM hash: hashcat -m 1000 -a 0 ntlm.txt /usr/share/wordlists/rockyou.txt
+Expected Output: You should see the cracked NTLM hash and its corresponding password.
+
+Step 6: Resume Cracking (If Interrupted)
+    1. If you need to stop the cracking process, press Ctrl+C.
+    2. Resume the cracking process using: hashcat --restore
+Expected Output: Hashcat will resume from where it left off.
+  
+Step 7: Save the Cracked Passwords to a File
+    1. To save the cracked passwords to a file: hashcat -m 0 -a 0 hash.txt /usr/share/wordlists/rockyou.txt --outfile cracked_passwords.txt
+    2. View the saved file: cat cracked_passwords.txt
