@@ -1,5 +1,7 @@
 Metasploit
 
+nmap -sS -Pn -f <ip>
+
 Step 1. Start Metasploit by typing: msfconsole
 
 Step 2. Wait for the Metasploit framework to load.
